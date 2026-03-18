@@ -1,6 +1,6 @@
 # Aftersell Claude Skills
 
-A collection of Claude Code skills built for an **SMB Agency Partner Manager** workflow at Aftersell by Rokt. Each skill automates a core part of the agency partnership workflow — from identifying who to talk to, to walking into a conversation with a fully prepared audit of their client's store.
+A Claude Code skill built for an **SMB Agency Partner Manager** workflow at Aftersell by Rokt.
 
 ---
 
@@ -17,94 +17,27 @@ Crawls a live store with browser-use, evaluates 14 Aftersell/UpCart features (ca
 
 ---
 
-### 🗂️ [`agency-contact-mapper`](./agency-contact-mapper/)
-**Maps sales-relevant contacts at Shopify agencies for outreach.**
-
-Takes an agency domain, searches the web and browses their LinkedIn people page, finds and verifies emails via Hunter.io, and writes contacts to a master Google Sheet — with priority ratings and tailored sell angles for each role. Filters out developers, ops, and support; targets CEOs, BD leads, client strategy, CRO, and GTM roles.
-
-```
-map contacts at example-agency.com
-```
-
-### 🧭 [`agency-scout`](./agency-scout/)
-**Discovers and scores net-new Shopify agencies for Aftersell fit.**
-
-Scrapes the Shopify Partner Directory and ecosystem partner pages (Klaviyo, Gorgias, Okendo, Rebuy), enriches with LinkedIn data, scores each agency 0–100 against a fit model (partner tier, ecosystem signals, size, geography, CRO language), deduplicates against your existing contact sheet, and writes a ranked list to a Google Sheets "Discovery" tab — ready to hand off to agency-contact-mapper.
-
-```
-/agency-scout
-find new agencies
-build my agency list
-```
-
----
-
-### 📡 [`agency-intel-digest`](./agency-intel-digest/)
-**Monitors a Shopify agency's LinkedIn activity and delivers a sales intelligence digest to Slack.**
-
-Logs into LinkedIn, finds the agency's most relevant BD and Sales contacts dynamically, scrapes their recent posts and company page activity, extracts direct source links, and posts a structured digest to Slack — Top Signals, Outreach Hooks, and Agency Focus Right Now.
-
-```
-run agency digest for example-agency
-what's happening at agency-b this week
-```
-
----
-
-## Setup
-
-### 1. Install skills
+## Install
 
 ```bash
-git clone https://github.com/NickLaws0n/aftersell-skills.git
-cp -r aftersell-skills/cart-audit ~/.claude/skills/
-cp -r aftersell-skills/agency-contact-mapper ~/.claude/skills/
-cp -r aftersell-skills/agency-intel-digest ~/.claude/skills/
-cp -r aftersell-skills/agency-scout ~/.claude/skills/
+git clone https://github.com/NickLaws0n/aftersell-skills-public.git
+cp -r aftersell-skills-public/cart-audit ~/.claude/skills/
 ```
 
 Skills are picked up automatically by Claude Code on next session start.
 
-### 2. Configure credentials
+### Requirements
 
-Add to `~/.claude/settings.json` (recommended — most reliable with Claude Code's Bash tool):
+- [Claude Code](https://claude.ai/code)
+- [browser-use](https://github.com/browser-use/browser-use) installed
+- `python3` (standard on macOS/Linux)
 
-```json
-{
-  "env": {
-    "LINKEDIN_EMAIL": "your-linkedin-email@example.com",
-    "LINKEDIN_PASSWORD": "your-linkedin-password",
-    "HUNTER_API_KEY": "your-hunter-io-api-key",
-    "AFTERSELL_SHEET_ID": "your-google-sheet-id",
-    "GOOGLE_MCP_EMAIL": "your-gmail-address@gmail.com",
-    "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
-  }
-}
-```
-
-Alternatively, export from `~/.zshrc` — but note that Claude Code's Bash tool does not always inherit shell env vars reliably. The `settings.json` approach is preferred.
-
-See `.env.example` for a full variable reference.
-
-### 3. Required accounts / tools
-
-| Skill | Requires |
-|---|---|
-| All LinkedIn skills | LinkedIn account |
-| `agency-contact-mapper` | [Hunter.io](https://hunter.io) API key (free tier works) |
-| `agency-contact-mapper`, `agency-scout` | Google Sheet + [Google Workspace MCP](https://github.com/anthropics/mcp-google-workspace) configured |
-| `agency-intel-digest` | Slack incoming webhook ([setup guide](https://api.slack.com/messaging/webhooks)) |
-| All skills | [browser-use](https://github.com/browser-use/browser-use) installed |
+No API keys or credentials required.
 
 ---
 
-## Why These Skills
+## Why This Skill
 
-The goal was to demonstrate how AI/automation can increase leverage and consistency in a partnership sales role. Each skill came out of a real workflow gap:
+Showing up to an agency conversation with a live audit of their client's store is more effective than a generic pitch. This skill came out of wanting a repeatable, verifiable way to identify what's missing — so conversations start from proof, not assumptions.
 
-- **cart-audit** — showing up to an agency conversation with a live audit of their client's store is more effective than a generic pitch
-- **agency-contact-mapper** — building a target contact list shouldn't require hours on LinkedIn
-- **agency-scout** — systematic top-of-funnel discovery and scoring before any manual research begins
-- **agency-intel-digest** — warm outreach based on what an agency is actually doing this week beats cold templates
-
-All four are designed to be improved iteratively. The scorecard template, feature checklist, scoring model, and signal detection logic are all works in progress.
+The scorecard template, feature checklist, and detection patterns are all works in progress and designed to be improved iteratively.
