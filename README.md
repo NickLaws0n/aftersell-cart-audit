@@ -1,6 +1,6 @@
 # Aftersell Claude Skills
 
-A Claude Code skill built for an **SMB Agency Partner Manager** workflow at Aftersell by Rokt.
+I created this skill as part of my interview process for an Agency Partner Manager role with Aftersell. It didn't work out unfortunately, but I didn't want this work to go to waste. My vision for this was to create a tool that could quickly and accurately identify what Aftersell features a brand was not taking advantage of by simply providing Claude with their URL. This is definitely a rough first version, especially given the heavy reliance on browser use. The thought experiment was how much value could we create by trading some amount of quality (i.e. product SME manually find opportunities) in exchange for the scale provided by running multiple audits in paralell. 
 
 ---
 
