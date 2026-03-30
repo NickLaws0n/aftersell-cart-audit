@@ -2,8 +2,9 @@
 name: cart-audit
 description: Audits a Shopify Plus merchant's cart and checkout flow using curl pre-flight (install detection, integration scan, product discovery) followed by targeted browser-use (cart drawer, PDP upsell, checkout features). Evaluates 14 Aftersell/Upcart features with four-state status (ACTIVE_AFTERSELL, ACTIVE_OTHER, MISSING, UNVERIFIED), detects integrations and competing apps, and generates a self-contained HTML scorecard. Use when user says "cart audit", "/cart-audit [url]", "audit [store]", or "check aftersell features on [store]". Do NOT use for competitor A/B analysis (use competitor-ab-audit instead).
 allowed-tools: Bash(browser-use:*), Bash(python3:*), Bash(curl:*)
+compatibility: Requires browser-use CLI and curl. Claude Code only.
 metadata:
-  version: 3.0.0
+  version: 3.1.0
 ---
 
 # Skill: /cart-audit
@@ -32,7 +33,7 @@ Audit a Shopify Plus merchant for Aftersell/Upcart feature gaps. Primary output:
 
 **Scorecard:**
 - No revenue numbers anywhere in output
-- Always runs via inline `python3 - << 'HEREDOC'` using `references/scorecard_template.py` as the base
+- Always runs via inline `python3 - << 'HEREDOC'` using `scripts/scorecard_template.py` as the base
 
 ---
 
@@ -371,7 +372,7 @@ See `references/integrations.md` for the full integration detection table.
 
 ## Step 5: Generate HTML Scorecard
 
-Use `references/scorecard_template.py` as the base. Fill in all data variables and run inline:
+Use `scripts/scorecard_template.py` as the base. Fill in all data variables and run inline:
 
 ```bash
 python3 - << 'HEREDOC'
