@@ -33,7 +33,8 @@ Audit a Shopify Plus merchant for Aftersell/Upcart feature gaps. Primary output:
 
 **Scorecard:**
 - No revenue numbers anywhere in output
-- Always runs via inline `python3 - << 'HEREDOC'` using `scripts/scorecard_template.py` as the base
+- NEVER write your own HTML or reconstruct the template — always exec `scripts/scorecard_template.py` from disk (see Step 5 for the exact pattern)
+- The scorecard output must contain a `review-box` section — if it doesn't, the scorecard is invalid
 
 ---
 
@@ -372,15 +373,38 @@ See `references/integrations.md` for the full integration detection table.
 
 ## Step 5: Generate HTML Scorecard
 
-Use `scripts/scorecard_template.py` as the base. Fill in all data variables and run inline:
+**CRITICAL: Do NOT write your own HTML. Do NOT reconstruct or rewrite the template. You MUST run `scripts/scorecard_template.py` exactly as it exists on disk.**
+
+The correct method is to inject the data variables at the top of a heredoc, then exec the template file for everything else. This is the only accepted pattern:
 
 ```bash
 python3 - << 'HEREDOC'
-# Paste scorecard_template.py here with all {{PLACEHOLDER}} values replaced:
-# STORE_NAME, STORE_URL, AUDIT_DATE
-# UPCART_STATUS, AFTERSELL_STATUS, CHECKOUT_BLOCKED
-# FEATURES (list of 14 feature dicts)
-# COMPATIBLE_INTEGRATIONS, COMPETING_INTEGRATIONS
+import base64, os
+from datetime import datetime
+
+STORE_NAME = "{{STORE_NAME}}"
+STORE_URL   = "{{STORE_URL}}"
+AUDIT_DATE  = "{{AUDIT_DATE}}"
+UPCART_STATUS    = "{{UPCART_STATUS}}"
+AFTERSELL_STATUS = "{{AFTERSELL_STATUS}}"
+CHECKOUT_BLOCKED = {{CHECKOUT_BLOCKED}}
+FEATURES = {{FEATURES_JSON}}
+COMPATIBLE_INTEGRATIONS = {{COMPATIBLE_JSON}}
+COMPETING_INTEGRATIONS  = {{COMPETING_JSON}}
+SCREENSHOTS = [
+    ("/tmp/cart_audit_home1.png",     "Homepage"),
+    ("/tmp/cart_audit_pdp.png",       "Product page"),
+    ("/tmp/cart_audit_atc.png",       "After add to cart"),
+    ("/tmp/cart_audit_cart1.png",     "Cart — above fold"),
+    ("/tmp/cart_audit_cart2.png",     "Cart — scrolled"),
+    ("/tmp/cart_audit_checkout1.png", "Checkout — above fold"),
+    ("/tmp/cart_audit_checkout2.png", "Checkout — scrolled"),
+]
+
+import os as _os
+src = open(_os.path.expanduser("~/.claude/skills/cart-audit/scripts/scorecard_template.py")).read()
+start = src.index("# ── FEATURE VALUE PROPOSITIONS")
+exec(src[start:])
 HEREDOC
 ```
 
