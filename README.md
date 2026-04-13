@@ -15,13 +15,15 @@ Crawls a live store with browser-use, evaluates 14 Aftersell/UpCart features (ca
 /cart-audit freeflyapparel.com
 ```
 
+![Scorecard example — Freefly Apparel audit](./cart-audit/scorecard-example.png)
+
 ---
 
 ## Install
 
 ```bash
-git clone https://github.com/NickLaws0n/aftersell-skills-public.git
-cp -r aftersell-skills-public/cart-audit ~/.claude/skills/
+git clone https://github.com/NickLaws0n/aftersell-cart-audit.git
+cp -r aftersell-cart-audit/cart-audit ~/.claude/skills/
 ```
 
 Skills are picked up automatically by Claude Code on next session start.
