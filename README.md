@@ -2,6 +2,8 @@
 
 I created this skill as part of my interview process for an Agency Partner Manager role with Aftersell. It didn't work out unfortunately, but I didn't want this work to go to waste. My vision for this was to create a tool that could quickly and accurately identify what Aftersell features a brand was not taking advantage of by simply providing Claude with their URL. This is definitely a rough first version, especially given the heavy reliance on browser use. The thought experiment was how much value could we create by trading some amount of quality (i.e. product SME manually find opportunities) in exchange for the scale provided by running multiple audits in paralell. 
 
+![Scorecard example — Freefly Apparel audit](./cart-audit/scorecard-example.png)
+
 ---
 
 ## Skills
@@ -14,8 +16,6 @@ Crawls a live store with browser-use, evaluates 14 Aftersell/UpCart features (ca
 ```
 /cart-audit freeflyapparel.com
 ```
-
-![Scorecard example — Freefly Apparel audit](./cart-audit/scorecard-example.png)
 
 ---
 
